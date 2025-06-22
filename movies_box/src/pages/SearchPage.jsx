@@ -49,6 +49,18 @@ const SearchPage = () => {
     dispatch(fetchMovies(params));
   }, [window.location.search, dispatch]);
 
+  useEffect(() => {
+    const q = query.get('query');
+    if (q) {
+      document.title = `${q} - Search | Movies Box`;
+    } else {
+      document.title = 'Search | Movies Box';
+    }
+    return () => {
+      document.title = 'Movies Box';
+    };
+  }, [query]);
+
   const handlePageChange = (event, value) => {
     const params = new URLSearchParams(window.location.search);
     params.set('page', value);

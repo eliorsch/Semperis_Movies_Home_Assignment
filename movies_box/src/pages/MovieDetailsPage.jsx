@@ -13,6 +13,15 @@ const MovieDetailsPage = () => {
     if (id) dispatch(fetchMovieDetails(id));
   }, [id, dispatch]);
 
+  useEffect(() => {
+    if (data && data.title) {
+      document.title = data.title + " | Movies Box";
+    }
+    return () => {
+      document.title = 'Movies Box'; // fallback default
+    };
+  }, [data]);
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div style={{ color: 'red' }}>{error}</div>;
   if (!data) return <div>No details found.</div>;
