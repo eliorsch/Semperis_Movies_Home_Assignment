@@ -5,16 +5,11 @@ import { fetchGenres } from '../slices/genresSlice';
 import { fetchLanguages } from '../slices/languagesSlice';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-const sortOptions = [
-  { value: 'popularity', label: 'Popularity' },
-  { value: 'vote_average', label: 'Rating' },
-  { value: 'release_date', label: 'Release Date' },
-];
-
-const orderOptions = [
-  { value: 'desc', label: 'Descending' },
-  { value: 'asc', label: 'Ascending' },
-];
+const currentYear = new Date().getFullYear();
+const yearOptions = [];
+for (let y = currentYear; y >= 1950; y--) {
+  yearOptions.push(y);
+}
 
 const SearchForm = () => {
   const dispatch = useDispatch();
@@ -26,8 +21,6 @@ const SearchForm = () => {
     query: '',
     genre: '',
     year: '',
-    sort: 'popularity',
-    order: 'desc',
     language: '',
   });
 
@@ -40,8 +33,6 @@ const SearchForm = () => {
       query: params.get('query') || '',
       genre: params.get('genre') || '',
       year: params.get('year') || '',
-      sort: params.get('sort') || 'popularity',
-      order: params.get('order') || 'desc',
       language: params.get('language') || '',
     });
   }, [dispatch, location.search]);
@@ -56,16 +47,14 @@ const SearchForm = () => {
     if (form.query) params.set('query', form.query);
     if (form.genre) params.set('genre', form.genre);
     if (form.year) params.set('year', form.year);
-    if (form.sort) params.set('sort', form.sort);
-    if (form.order) params.set('order', form.order);
     if (form.language) params.set('language', form.language);
     navigate(`/search?${params.toString()}`);
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ mb: 3 }}>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={4}>
+    <Box component="form" onSubmit={handleSubmit} sx={{ mb: 4, background: 'background.paper', borderRadius: 2, p: { xs: 3, sm: 4 }, boxShadow: 'none', border: '1px solid', borderColor: 'divider' }}>
+      <Grid container spacing={4} justifyContent="space-between" alignItems="center" sx={{ flexDirection: { xs: 'column', sm: 'row' } }}>
+        <Grid item size={{ xs: 12}}>
           <TextField
             label="Title"
             name="query"
@@ -73,9 +62,20 @@ const SearchForm = () => {
             onChange={handleChange}
             fullWidth
             size="small"
+            sx={{
+              background: 'background.default',
+              borderRadius: 2,
+              mb: 3,
+              '& .MuiOutlinedInput-root': {
+                paddingLeft: 2,
+                paddingRight: 2,
+                paddingTop: 1.5,
+                paddingBottom: 1.5,
+              },
+            }}
           />
         </Grid>
-        <Grid item xs={12} sm={2}>
+        <Grid item size={{ xs: 12, sm: 3 }}>
           <FormControl fullWidth size="small">
             <InputLabel>Genre</InputLabel>
             <Select
@@ -83,6 +83,8 @@ const SearchForm = () => {
               name="genre"
               value={form.genre}
               onChange={handleChange}
+              sx={{ background: 'background.default', borderRadius: 2 }}
+              size="small"
             >
               <MenuItem value="">All</MenuItem>
               {genres.map((g) => (
@@ -91,48 +93,25 @@ const SearchForm = () => {
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={12} sm={2}>
-          <TextField
-            label="Year"
-            name="year"
-            value={form.year}
-            onChange={handleChange}
-            type="number"
-            fullWidth
-            size="small"
-          />
-        </Grid>
-        <Grid item xs={12} sm={2}>
+        <Grid item  size={{ xs: 12, sm: 3 }}>
           <FormControl fullWidth size="small">
-            <InputLabel>Sort By</InputLabel>
+            <InputLabel>Year</InputLabel>
             <Select
-              label="Sort By"
-              name="sort"
-              value={form.sort}
+              label="Year"
+              name="year"
+              value={form.year}
               onChange={handleChange}
+              sx={{ background: 'background.default', borderRadius: 2 }}
+              size="small"
             >
-              {sortOptions.map((opt) => (
-                <MenuItem key={opt.value} value={opt.value}>{opt.label}</MenuItem>
+              <MenuItem value="">All</MenuItem>
+              {yearOptions.map((year) => (
+                <MenuItem key={year} value={year}>{year}</MenuItem>
               ))}
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={12} sm={2}>
-          <FormControl fullWidth size="small">
-            <InputLabel>Order</InputLabel>
-            <Select
-              label="Order"
-              name="order"
-              value={form.order}
-              onChange={handleChange}
-            >
-              {orderOptions.map((opt) => (
-                <MenuItem key={opt.value} value={opt.value}>{opt.label}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={2}>
+        <Grid item size={{ xs: 12, sm: 3 }}>
           <FormControl fullWidth size="small">
             <InputLabel>Language</InputLabel>
             <Select
@@ -140,6 +119,8 @@ const SearchForm = () => {
               name="language"
               value={form.language}
               onChange={handleChange}
+              sx={{ background: 'background.default', borderRadius: 2 }}
+              size="small"
             >
               <MenuItem value="">All</MenuItem>
               {languages.map((lang) => (
@@ -150,8 +131,10 @@ const SearchForm = () => {
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={12}>
-          <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: { xs: 2, sm: 0 } }}>Search</Button>
+        <Grid item size={{ xs: 12, sm: 3 }}>
+          <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2, fontWeight: 700, fontSize: 18, borderRadius: 1 }}>
+            Search
+          </Button>
         </Grid>
       </Grid>
     </Box>

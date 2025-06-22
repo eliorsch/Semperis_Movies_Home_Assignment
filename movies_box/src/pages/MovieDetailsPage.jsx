@@ -18,30 +18,30 @@ const MovieDetailsPage = () => {
   if (!data) return <div>No details found.</div>;
 
   return (
-    <Container maxWidth="md" sx={{ mt: 4 }}>
-      <Grid container spacing={4}>
+    <Container maxWidth="md" sx={{ mt: 6, mb: 6 }}>
+      <Grid container spacing={6}>
         <Grid item xs={12} sm={4}>
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <img
               src={data.poster_path ? `https://image.tmdb.org/t/p/w500${data.poster_path}` : '/vite.svg'}
               alt={data.title}
-              style={{ width: '100%', borderRadius: 8, maxWidth: 300, height: 'auto' }}
+              style={{ width: '100%', borderRadius: 12, maxWidth: 320, height: 'auto', border: '4px solid #f4c430', boxShadow: '0 8px 32px rgba(10,14,39,0.7)' }}
             />
           </Box>
         </Grid>
         <Grid item xs={12} sm={8}>
-          <Typography variant="h4" gutterBottom sx={{ fontSize: { xs: '1.5rem', sm: '2.125rem' } }}>
-            {data.title} ({data.release_date?.slice(0, 4)})
+          <Typography variant="h2" gutterBottom sx={{ fontWeight: 700, mb: 2 }}>
+            {data.title} <span style={{ fontWeight: 400, color: '#b8bcc8' }}>({data.release_date?.slice(0, 4)})</span>
           </Typography>
-          <Typography variant="subtitle1" color="text.secondary" gutterBottom sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}>
+          <Typography variant="h5" color="text.secondary" gutterBottom sx={{ fontWeight: 500, mb: 2 }}>
             {data.tagline}
           </Typography>
-          <Box sx={{ mb: 2, display: 'flex', flexWrap: 'wrap' }}>
+          <Box sx={{ mb: 3, display: 'flex', flexWrap: 'wrap' }}>
             {data.genres?.map((g) => (
-              <Chip key={g.id} label={g.name} sx={{ mr: 1, mb: 1 }} />
+              <Chip key={g.id} label={g.name} sx={{ mr: 1, mb: 1, fontWeight: 600, background: '#2a2f4a', color: '#f4c430' }} />
             ))}
           </Box>
-          <Typography variant="body1" sx={{ mb: 2 }}>
+          <Typography variant="body1" sx={{ mb: 2, fontSize: 18 }}>
             <strong>Overview:</strong> {data.overview}
           </Typography>
           <Typography variant="body2" sx={{ mb: 1 }}>
@@ -59,20 +59,22 @@ const MovieDetailsPage = () => {
           <Typography variant="body2" sx={{ mb: 1 }}>
             <strong>Director:</strong> {data.credits?.crew?.find((c) => c.job === 'Director')?.name || 'N/A'}
           </Typography>
-          <Divider sx={{ my: 2 }} />
-          <Typography variant="h6" sx={{ mb: 1 }}>Cast</Typography>
-          <Grid container spacing={1}>
+          <Divider sx={{ my: 3, borderColor: 'primary.main' }} />
+          <Typography variant="h4" sx={{ mb: 2, fontWeight: 700, color: 'primary.main' }}>Cast</Typography>
+          <Grid container spacing={2}>
             {data.credits?.cast?.slice(0, 8).map((c) => (
               <Grid item xs={6} sm={3} key={c.cast_id || c.credit_id}>
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
                   <Avatar
                     src={c.profile_path ? `https://image.tmdb.org/t/p/w185${c.profile_path}` : undefined}
                     alt={c.name}
-                    sx={{ width: 56, height: 56, mb: 1 }}
+                    sx={{ width: 64, height: 64, mb: 1, background: '#2a2f4a', color: '#f4c430', fontWeight: 700, fontSize: 24 }}
                   >
                     {c.name[0]}
                   </Avatar>
-                  <Typography variant="caption" align="center" noWrap>{c.name}</Typography>
+                  <Typography variant="caption" align="center" noWrap sx={{ fontWeight: 600 }}>
+                    {c.name}
+                  </Typography>
                   <Typography variant="caption" color="text.secondary" align="center" noWrap>
                     {c.character}
                   </Typography>

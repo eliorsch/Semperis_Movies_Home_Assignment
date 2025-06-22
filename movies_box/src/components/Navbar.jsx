@@ -38,11 +38,11 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar position="static" color="default" elevation={1}>
-      <Toolbar sx={{ flexWrap: 'wrap', px: { xs: 1, sm: 2 } }}>
+    <AppBar position="static" color="default" elevation={0} sx={{ background: 'rgba(10,14,39,0.95)', borderBottom: '1px solid', borderColor: 'divider', boxShadow: 'none' }}>
+      <Toolbar sx={{ flexWrap: 'wrap', px: { xs: 1, sm: 2 }, minHeight: 64 }}>
         <Box component={Link} to="/" sx={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'inherit', minWidth: 0 }}>
-          <img src="/logo2.png" alt="Logo" style={{ height: 36, marginRight: 8, maxWidth: '100%' }} />
-          <Typography variant="h6" noWrap sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}>Movies Box</Typography>
+          <img src="/logo2.png" alt="Logo" style={{ height: 40, marginRight: 12, maxWidth: '100%' }} />
+          <Typography variant="h4" noWrap sx={{ fontWeight: 700, fontSize: { xs: '1.5rem', sm: '2rem' }, color: 'primary.main', letterSpacing: 1 }}>Movies Box</Typography>
         </Box>
         <Box sx={{ flexGrow: 1 }} />
         {isMobile ? (
@@ -50,7 +50,7 @@ const Navbar = () => {
             <IconButton edge="end" color="inherit" onClick={handleDrawerToggle}>
               <MenuIcon />
             </IconButton>
-            <Drawer anchor="right" open={drawerOpen} onClose={handleDrawerToggle}>
+            <Drawer anchor="right" open={drawerOpen} onClose={handleDrawerToggle} PaperProps={{ sx: { background: 'background.paper', color: 'text.primary' } }}>
               <List sx={{ minWidth: 220 }}>
                 <ListItem disablePadding>
                   <Box component="form" onSubmit={handleQuickSearch} sx={{ width: '100%', p: 2, display: 'flex', alignItems: 'center' }}>
@@ -62,20 +62,20 @@ const Navbar = () => {
                       InputProps={{
                         endAdornment: (
                           <InputAdornment position="end">
-                            <IconButton type="submit" size="small">
+                            <IconButton type="submit" size="small" color="primary">
                               <SearchIcon />
                             </IconButton>
                           </InputAdornment>
                         ),
                       }}
-                      sx={{ width: '100%', background: '#fff', borderRadius: 1 }}
+                      sx={{ width: '100%' }}
                     />
                   </Box>
                 </ListItem>
                 {menuItems.map((item) => (
                   <ListItem key={item.label} disablePadding>
-                    <ListItemButton onClick={() => handleMenuClick(item.to)}>
-                      <ListItemText primary={item.label} />
+                    <ListItemButton onClick={() => handleMenuClick(item.to)} sx={{ '&:hover': { background: 'primary.main', color: 'primary.contrastText' } }}>
+                      <ListItemText primary={item.label} primaryTypographyProps={{ fontWeight: 600 }} />
                     </ListItemButton>
                   </ListItem>
                 ))}
@@ -84,8 +84,8 @@ const Navbar = () => {
           </>
         ) : (
           <>
-            <Button component={Link} to="/search?sort=vote_average&order=desc" color="inherit" sx={{ mr: { xs: 1, sm: 2 }, fontSize: { xs: '0.8rem', sm: '1rem' } }}>Top Rated</Button>
-            <Button component={Link} to="/search?sort=release_date&order=desc" color="inherit" sx={{ mr: { xs: 1, sm: 2 }, fontSize: { xs: '0.8rem', sm: '1rem' } }}>New Movies</Button>
+            <Button component={Link} to="/search?sort=vote_average&order=desc" color="inherit" sx={{ mr: { xs: 1, sm: 2 }, fontWeight: 600, color: 'primary.main', '&:hover': { color: 'secondary.main' } }}>Top Rated</Button>
+            <Button component={Link} to="/search?sort=release_date&order=desc" color="inherit" sx={{ mr: { xs: 1, sm: 2 }, fontWeight: 600, color: 'primary.main', '&:hover': { color: 'secondary.main' } }}>New Movies</Button>
             <Box component="form" onSubmit={handleQuickSearch} sx={{ display: 'flex', alignItems: 'center', minWidth: 0, ml: { xs: 1, sm: 0 } }}>
               <TextField
                 size="small"
@@ -95,13 +95,13 @@ const Navbar = () => {
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
-                      <IconButton type="submit" size="small">
+                      <IconButton type="submit" size="small" color="primary">
                         <SearchIcon />
                       </IconButton>
                     </InputAdornment>
                   ),
                 }}
-                sx={{ minWidth: { xs: 120, sm: 180 }, background: '#fff', borderRadius: 1 }}
+                sx={{ minWidth: { xs: 120, sm: 180 } }}
               />
             </Box>
           </>

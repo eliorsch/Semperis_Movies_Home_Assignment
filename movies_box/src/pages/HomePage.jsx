@@ -15,8 +15,10 @@ const HomePage = () => {
   }, [dispatch]);
 
   return (
-    <Container maxWidth="lg">
-      <Typography variant="h4" sx={{ mt: 3, mb: 2 }}>Featured / Latest Movies</Typography>
+    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+      <Typography variant="h2" sx={{ mb: 4, borderLeft: '6px solid', borderColor: 'primary.main', pl: 3, fontWeight: 700 }}>
+        Featured / Latest Movies
+      </Typography>
       {loading && <p>Loading...</p>}
       {error && <p style={{color:'red'}}>{error}</p>}
       <MovieGallery movies={movies} />
