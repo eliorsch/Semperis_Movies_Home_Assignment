@@ -22,6 +22,8 @@ const SearchForm = () => {
     genre: '',
     year: '',
     language: '',
+    votes: '',
+    rating: '',
   });
 
   useEffect(() => {
@@ -34,6 +36,8 @@ const SearchForm = () => {
       genre: params.get('genre') || '',
       year: params.get('year') || '',
       language: params.get('language') || '',
+      votes: params.get('votes') || '',
+      rating: params.get('rating') || '',
     });
   }, [dispatch, location.search]);
 
@@ -48,13 +52,25 @@ const SearchForm = () => {
     if (form.genre) params.set('genre', form.genre);
     if (form.year) params.set('year', form.year);
     if (form.language) params.set('language', form.language);
+    // Handle min-votes (custom or preset)
+    if (form.votes === 'custom' && form.votesCustom) {
+      params.set('votes', form.votesCustom);
+    } else if (form.votes && form.votes !== 'custom') {
+      params.set('votes', form.votes);
+    }
+    // Handle min-rating (custom or preset)
+    if (form.rating === 'custom' && form.ratingCustom) {
+      params.set('rating', form.ratingCustom);
+    } else if (form.rating && form.rating !== 'custom') {
+      params.set('rating', form.rating);
+    }
     navigate(`/search?${params.toString()}`);
   };
 
   return (
     <Box component="form" onSubmit={handleSubmit} sx={{ mb: 4, background: 'background.paper', borderRadius: 2, p: { xs: 3, sm: 4 }, boxShadow: 'none', border: '1px solid', borderColor: 'divider' }}>
       <Grid container spacing={4} justifyContent="space-between" alignItems="center" sx={{ flexDirection: { xs: 'column', sm: 'row' } }}>
-        <Grid item size={{ xs: 12}}>
+        <Grid item size={{ xs: 12, sm: 3 }}>
           <TextField
             label="Title"
             name="query"
@@ -62,17 +78,6 @@ const SearchForm = () => {
             onChange={handleChange}
             fullWidth
             size="small"
-            sx={{
-              background: 'background.default',
-              borderRadius: 2,
-              mb: 3,
-              '& .MuiOutlinedInput-root': {
-                paddingLeft: 2,
-                paddingRight: 2,
-                paddingTop: 1.5,
-                paddingBottom: 1.5,
-              },
-            }}
           />
         </Grid>
         <Grid item size={{ xs: 12, sm: 3 }}>
@@ -130,6 +135,74 @@ const SearchForm = () => {
               ))}
             </Select>
           </FormControl>
+        </Grid>
+        <Grid item size={{ xs: 12, sm: 3 }}>
+          <FormControl fullWidth size="small">
+            <InputLabel>Min Votes</InputLabel>
+            <Select
+              label="Min Votes"
+              name="votes"
+              value={form.votes || ''}
+              onChange={handleChange}
+              sx={{ background: 'background.default', borderRadius: 2 }}
+              size="small"
+              renderValue={(selected) => selected === 'custom' ? 'Custom' : (selected ? `${selected}+` : 'All')}
+            >
+              <MenuItem value="">All</MenuItem>
+              <MenuItem value="100">100+</MenuItem>
+              <MenuItem value="500">500+</MenuItem>
+              <MenuItem value="1000">1000+</MenuItem>
+              <MenuItem value="5000">5000+</MenuItem>
+              <MenuItem value="custom">Custom...</MenuItem>
+            </Select>
+          </FormControl>
+          {form.votes === 'custom' && (
+            <TextField
+              label="Custom Min Votes"
+              name="votesCustom"
+              type="number"
+              value={form.votesCustom || ''}
+              onChange={e => setForm({ ...form, votesCustom: e.target.value })}
+              size="small"
+              fullWidth
+              sx={{ mt: 1, background: 'background.default', borderRadius: 2 }}
+              inputProps={{ min: 0 }}
+            />
+          )}
+        </Grid>
+        <Grid item size={{ xs: 12, sm: 3 }}>
+          <FormControl fullWidth size="small">
+            <InputLabel>Min Rating</InputLabel>
+            <Select
+              label="Min Rating"
+              name="rating"
+              value={form.rating || ''}
+              onChange={handleChange}
+              sx={{ background: 'background.default', borderRadius: 2 }}
+              size="small"
+              renderValue={(selected) => selected === 'custom' ? 'Custom' : (selected ? `${selected}+` : 'All')}
+            >
+              <MenuItem value="">All</MenuItem>
+              <MenuItem value="5">5+</MenuItem>
+              <MenuItem value="6">6+</MenuItem>
+              <MenuItem value="7">7+</MenuItem>
+              <MenuItem value="8">8+</MenuItem>
+              <MenuItem value="custom">Custom...</MenuItem>
+            </Select>
+          </FormControl>
+          {form.rating === 'custom' && (
+            <TextField
+              label="Custom Min Rating"
+              name="ratingCustom"
+              type="number"
+              value={form.ratingCustom || ''}
+              onChange={e => setForm({ ...form, ratingCustom: e.target.value })}
+              size="small"
+              fullWidth
+              sx={{ mt: 1, background: 'background.default', borderRadius: 2 }}
+              inputProps={{ min: 0, max: 10, step: 0.1 }}
+            />
+          )}
         </Grid>
         <Grid item size={{ xs: 12, sm: 3 }}>
           <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2, fontWeight: 700, fontSize: 18, borderRadius: 1 }}>

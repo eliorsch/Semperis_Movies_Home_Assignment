@@ -16,6 +16,9 @@ export const fetchMovies = createAsyncThunk(
     if (params.release_date_lte) url += `&release_date.lte=${params.release_date_lte}`;
     // Only add language param for discover endpoint (API_URL), not for search endpoint (API_SEARCH_URL)
     if (!query && params.language) url += `&with_original_language=${params.language}`;
+    // Min votes and rating
+    if (params.votes) url += `&vote_count.gte=${params.votes}`;
+    if (params.rating) url += `&vote_average.gte=${params.rating}`;
     try {
       const res = await fetch(url, {
         headers: { Authorization: `Bearer ${TMDB_TOKEN}` },

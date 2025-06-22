@@ -42,6 +42,8 @@ const SearchPage = () => {
       page: query.get('page') || 1,
       release_date_lte: new Date().toISOString().slice(0, 10),
       language: query.get('language') || '',
+      votes: query.get('votes') || '',
+      rating: query.get('rating') || '',
     };
     dispatch(setFilters(params));
     dispatch(fetchMovies(params));
@@ -95,7 +97,7 @@ const SearchPage = () => {
       </Box>
       {loading && <p>Loading...</p>}
       {error && <p style={{color:'red'}}>{error}</p>}
-      <MovieGallery movies={movies} />
+      <MovieGallery movies={movies} loading={loading} error={error} />
       <Stack direction="row" justifyContent="center" sx={{ my: 4 }}>
         <Pagination
           count={totalPages}

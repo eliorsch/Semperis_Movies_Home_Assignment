@@ -110,13 +110,12 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           background: '#1e2235',
-          borderRadius: 12,
+          borderRadius: 24,
           '& .MuiOutlinedInput-root': {
             color: '#fff',
-            borderRadius: 12,
+            borderRadius: 24,
             '& fieldset': {
-              borderColor: '#2d3748',
-              borderWidth: 2,
+              borderColor: 'divider',
             },
             '&:hover fieldset': {
               borderColor: '#f4c430',

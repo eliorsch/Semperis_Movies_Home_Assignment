@@ -19,7 +19,7 @@ const MovieDetailsPage = () => {
 
   return (
     <Container maxWidth="md" sx={{ mt: 6, mb: 6 }}>
-      <Grid container spacing={6}>
+      <Grid container spacing={6} gap={{ xs: 2, sm: 4 }} flexDirection={"column"} alignItems={"flex-start"}>
         <Grid item xs={12} sm={4}>
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <img
@@ -38,7 +38,25 @@ const MovieDetailsPage = () => {
           </Typography>
           <Box sx={{ mb: 3, display: 'flex', flexWrap: 'wrap' }}>
             {data.genres?.map((g) => (
-              <Chip key={g.id} label={g.name} sx={{ mr: 1, mb: 1, fontWeight: 600, background: '#2a2f4a', color: '#f4c430' }} />
+              <Chip
+                key={g.id}
+                label={g.name}
+                component="a"
+                href={`/search?genre=${g.id}`}
+                clickable
+                sx={{
+                  mr: 1,
+                  mb: 1,
+                  fontWeight: 600,
+                  background: '#2a2f4a',
+                  color: '#f4c430',
+                  textDecoration: 'none',
+                  '&:hover': {
+                    background: 'primary.main',
+                    color: '#fff',
+                  },
+                }}
+              />
             ))}
           </Box>
           <Typography variant="body1" sx={{ mb: 2, fontSize: 18 }}>

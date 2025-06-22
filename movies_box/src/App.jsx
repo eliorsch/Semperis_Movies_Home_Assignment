@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import MovieDetailsPage from './pages/MovieDetailsPage';
 import SearchPage from './pages/SearchPage';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import theme from './theme';
 import "./App.css"; // Assuming you have some global styles
 
@@ -18,6 +19,7 @@ function App() {
           <Route path="/movies/:id" element={<MovieDetailsPage />} />
           <Route path="/search" element={<SearchPage />} />
         </Routes>
+        <Footer />
       </Router>
     </ThemeProvider>
   );
