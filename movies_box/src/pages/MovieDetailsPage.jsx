@@ -79,9 +79,9 @@ const MovieDetailsPage = () => {
           </Typography>
           <Divider sx={{ my: 3, borderColor: 'primary.main' }} />
           <Typography variant="h4" sx={{ mb: 2, fontWeight: 700, color: 'primary.main' }}>Cast</Typography>
-          <Grid container spacing={2}>
+          <Grid container spacing={1}>
             {data.credits?.cast?.slice(0, 8).map((c) => (
-              <Grid item xs={6} sm={3} key={c.cast_id || c.credit_id}>
+              <Grid item size={{ xs: 4, sm: 3 }} key={c.cast_id || c.credit_id}>
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
                   <Avatar
                     src={c.profile_path ? `https://image.tmdb.org/t/p/w185${c.profile_path}` : undefined}

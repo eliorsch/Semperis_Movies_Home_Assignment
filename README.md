@@ -8,9 +8,14 @@ A modern, responsive Single Page Application (SPA) for browsing, searching, and 
 - View detailed information for each movie (synopsis, cast, director, etc.)
 - Responsive gallery layout with equal-sized movie cards
 - Quick search and navigation via a modern navbar (with mobile hamburger menu)
+
+## Build proccess
+- Built with Copilot Agent
+- Built with React, Vite, and Material UI (MUI)
 - State management with Redux Toolkit
 - Data fetched from The Movie Database (TMDb) API
-- Built with React, Vite, and Material UI (MUI)
+- The project includes a `guidelines` folder that outlines key principles and conventions, such as those for Redux state management, UI design, routing, and page structure.
+
 
 ## Live Demo
 - 🌐 [moviesbox547.netlify.app](https://moviesbox547.netlify.app/)
